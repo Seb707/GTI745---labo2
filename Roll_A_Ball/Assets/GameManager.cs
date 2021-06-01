@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public Rigidbody ballRB;
     public string messageWB;
 
+    private GameObject[] enemies;
+    private bool isDisabled;
+    int updateCounterDelay = 0;
     WebSocket websocket;
 
     // Start is called before the first frame update
@@ -16,6 +19,7 @@ public class GameManager : MonoBehaviour
     {
         ball = GameObject.Find("Player");
         ballRB = ball.GetComponent<Rigidbody>();
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         websocket = new WebSocket("ws://localhost:8080");
 
@@ -62,28 +66,41 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(messageWB);
 
+            if (updateCounterDelay >= 1) {
+                if (updateCounterDelay == 500)
+                {
+                    updateCounterDelay = 0;
+                }
+                else {
+                    updateCounterDelay++;
+                }
+            }
+
             switch (messageWB)
             {
                 case "right":
-                    ballRB.AddForce(Vector3.right * 3);
+                    ballRB.AddForce(Vector3.right * 2);
                     break;
                 case "left":
-                    ballRB.AddForce(Vector3.left * 3);
+                    ballRB.AddForce(Vector3.left * 2);
                     break;
                 case "back":
-                    ballRB.AddForce(Vector3.forward * 3);
+                    ballRB.AddForce(Vector3.forward * 2);
                     break;
                 case "front":
-                    ballRB.AddForce(Vector3.back * 3);
+                    ballRB.AddForce(Vector3.back * 2);
                     break;
                 case "neutral":
                     ballRB.velocity = ballRB.velocity * 0.95f * Time.deltaTime;
                     break;
                 case "ok_hand":
-                    ballRB.AddForce(Vector3.right * 3);
+                    //ballRB.AddForce(Vector3.right * 3);
                     break;
                 case "peace_sign":
-                    ballRB.AddForce(Vector3.right * 3);
+                    if (updateCounterDelay == 0) {
+                        updateCounterDelay = 1;
+                        disableEnemies();
+                    }
                     break;
                 case "boite_grise":
                     ballRB.AddForce(Vector3.right * 3);
@@ -99,7 +116,26 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    private void disableEnemies() {
+        if (!isDisabled)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                print("disabled");
+                enemy.SetActive(false);
+                isDisabled = true;
+            }
+        }
+        else if (isDisabled) {
+            foreach (GameObject enemy in enemies)
+            {
+                print("enableing");
+                enemy.SetActive(true);
+                isDisabled = false;
+            }
+        }
 
+    }
     async void SendWebSocketMessage()
     {
         if (websocket.State == WebSocketState.Open)
