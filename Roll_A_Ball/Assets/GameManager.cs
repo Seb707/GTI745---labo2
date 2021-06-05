@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject ball;
     public Rigidbody ballRB;
     public string messageWB;
+    public GameObject RestartTextObject;
+    public GameObject RestartBgObject;
+    public GameObject RestartImageObject;
 
+    private bool awaitConfirm;
+    private bool awaitRestartConfirm;
+    private int awaitTimer = 0;
     private GameObject[] enemies;
     private bool isDisabled;
     int updateCounterDelay = 0;
@@ -17,10 +24,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     async void Start()
     {
+        RestartTextObject.SetActive(false);
+        RestartBgObject.SetActive(false);
+        RestartImageObject.SetActive(false);
         ball = GameObject.Find("Player");
         ballRB = ball.GetComponent<Rigidbody>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
+        
         websocket = new WebSocket("ws://localhost:8080");
 
         websocket.OnOpen += () =>
@@ -76,46 +86,91 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            switch (messageWB)
+            if (awaitConfirm)
             {
-                case "right":
-                    ballRB.AddForce(Vector3.right * 2);
-                    break;
-                case "left":
-                    ballRB.AddForce(Vector3.left * 2);
-                    break;
-                case "back":
-                    ballRB.AddForce(Vector3.forward * 2);
-                    break;
-                case "front":
-                    ballRB.AddForce(Vector3.back * 2);
-                    break;
-                case "neutral":
-                    ballRB.velocity = ballRB.velocity * 0.95f * Time.deltaTime;
-                    break;
-                case "ok_hand":
-                    //ballRB.AddForce(Vector3.right * 3);
-                    break;
-                case "peace_sign":
-                    if (updateCounterDelay == 0) {
-                        updateCounterDelay = 1;
-                        disableEnemies();
+                awaitTimer++;
+                switch (messageWB)
+                {
+                    case "ok_hand":
+                        if (awaitRestartConfirm) {
+                            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                            Time.timeScale = 1;
+                        }
+                        break;
+                }
+                if (awaitTimer == 2000) {
+                    if (awaitRestartConfirm)
+                    {
+                        rsumeFromRestart();
+                        awaitTimer = 0;
                     }
-                    break;
-                case "boite_grise":
-                    ballRB.AddForce(Vector3.right * 3);
-                    break;
-                case "iphone":
-                    ballRB.AddForce(Vector3.right * 3);
-                    break;
-                case "feuille_blanche":
-                    ballRB.AddForce(Vector3.right * 3);
-                    break;
-                default:
-                    break;
+                }
+            }else {
+                switch (messageWB)
+                {
+                    case "right":
+                        ballRB.AddForce(Vector3.right * 2);
+                        break;
+                    case "left":
+                        ballRB.AddForce(Vector3.left * 2);
+                        break;
+                    case "back":
+                        ballRB.AddForce(Vector3.forward * 2);
+                        break;
+                    case "front":
+                        ballRB.AddForce(Vector3.back * 2);
+                        break;
+                    case "neutral":
+                        ballRB.velocity = ballRB.velocity * 0.95f * Time.deltaTime;
+                        break;
+                    case "ok_hand":
+                        //ballRB.AddForce(Vector3.right * 3);
+                        break;
+                    case "peace_sign":
+                        if (updateCounterDelay == 0) {
+                            updateCounterDelay = 1;
+                            disableEnemies();
+                        }
+                        break;
+                    case "boite_grise":
+                        ballRB.AddForce(Vector3.right * 3);
+                        break;
+                    case "iphone":
+                        ballRB.AddForce(Vector3.right * 3);
+                        break;
+                    case "feuille_blanche":
+                        confirmRestart();
+                        break;
+                    default:
+                        break;
+                }
             }
+            
         }
     }
+
+    private void confirmRestart() {
+        Time.timeScale = 0;
+
+        awaitConfirm = true;
+        awaitRestartConfirm = true;
+        RestartTextObject.SetActive(true);
+        RestartBgObject.SetActive(true);
+        RestartImageObject.SetActive(true);
+
+    }
+
+    private void rsumeFromRestart() {
+
+        awaitConfirm = false;
+        awaitRestartConfirm = false;
+        RestartTextObject.SetActive(false);
+        RestartBgObject.SetActive(false);
+        RestartImageObject.SetActive(false);
+
+        Time.timeScale = 1;
+    }
+
     private void disableEnemies() {
         if (!isDisabled)
         {

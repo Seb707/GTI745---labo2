@@ -11,16 +11,23 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
     public TextMeshProUGUI speedTextObject;
     public TextMeshProUGUI ObjectiveTextObject;
+    public TextMeshProUGUI LifePointsTextObject;
     public float fadeSpeed;
+    public AudioClip EnemyHitclip;
 
     private bool fadeIn, fadeOut;
     private int objective = 1;
     private GameObject door;
+    private GameObject Player;
     private Rigidbody rb;
     private int count;
+    private int lifePoints;
+    private bool isPlayerInv;
+    private int invTimer;
     private int totalPickUps;
     private float movementX;
     private float movementY;
+    private Color originalColors;
 
     //private int lifeCounter = 4;
     //public Image[] hearts;
@@ -34,17 +41,24 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         count = 0;
         totalPickUps = 9;
+        lifePoints = 6;
+        invTimer = 0;
+
+        isPlayerInv = false;
         SetCountText();
         winTextObject.SetActive(false);
         SetSpeedText();
         SetObjectifText();
+        Player = GameObject.Find("Player");
         door = GameObject.Find("Door");
+        originalColors = Player.GetComponent<Renderer>().material.color;
 
     }
 
     void Update() {
         SetSpeedText();
         SetObjectifText();
+        SetLifePointText();
         //print("update");
         if (fadeOut)
         {
@@ -105,10 +119,36 @@ public class PlayerController : MonoBehaviour
 
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString()+"/"+ totalPickUps.ToString();
+        countText.text = "Count: " + count.ToString() + "/" + totalPickUps.ToString();
         if (count >= 9)
         {
             winTextObject.SetActive(true);
+        }
+    }
+
+    void SetLifePointText()
+    {
+        Color playerColor = Player.GetComponent<Renderer>().material.color;
+
+        if (isPlayerInv) {
+            invTimer++;
+            if (invTimer == 800) {
+                isPlayerInv = false;
+                invTimer = 0;
+            }
+        }
+        if (invTimer % 100 >= 50)
+        {
+            playerColor = new Color(208, 64, 57, 1.0f);
+            LifePointsTextObject.text = "Point de vie:   /6";
+            Player.GetComponent<Renderer>().material.color = playerColor;
+        }
+        else {
+            playerColor = new Color(originalColors.r, originalColors.g, originalColors.b, originalColors.a);
+
+            LifePointsTextObject.text = "Point de vie: " + lifePoints.ToString() + "/6";
+            Player.GetComponent<Renderer>().material.color = playerColor;
+
         }
     }
 
@@ -139,8 +179,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision col) {
 
-        if (col.gameObject.tag == "Enemy") {
-            door.SetActive(true);
+        if (!isPlayerInv) {
+            if (col.gameObject.tag == "Enemy") {
+                isPlayerInv = true;
+                lifePoints--;
+                print("colision detected");
+                AudioSource.PlayClipAtPoint(EnemyHitclip, col.gameObject.transform.position);
+                SetLifePointText();
+            }
         }
         Debug.LogFormat("{0} collision enter: {1}", this, col.gameObject);
     }
@@ -150,7 +196,6 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.name == "doorHitBox")
         {
-            print("Woohoo");
             fadeIn = true;
         }
 

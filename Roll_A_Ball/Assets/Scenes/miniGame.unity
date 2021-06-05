@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.25330016, g: 0.216988, b: 0.23319209, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3295,6 +3295,7 @@ MonoBehaviour:
   speedTextObject: {fileID: 593492687}
   ObjectiveTextObject: {fileID: 1337533921}
   fadeSpeed: 0.5
+  EnemyHitclip: {fileID: 8300000, guid: a86c0cf4df42f3b449d85e1a94098cbd, type: 3}
 --- !u!1 &1924289786
 GameObject:
   m_ObjectHideFlags: 0
