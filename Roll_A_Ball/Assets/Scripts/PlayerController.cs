@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -96,8 +97,11 @@ public class PlayerController : MonoBehaviour
 
     void SetObjectifText()
     {
-        
-        
+        if (count == 8 && objective == 1)
+        {
+            objective++;
+        }
+
 
         switch (objective)
         {
@@ -122,6 +126,7 @@ public class PlayerController : MonoBehaviour
         countText.text = "Count: " + count.ToString() + "/" + totalPickUps.ToString();
         if (count >= 9)
         {
+            Time.timeScale = 0;
             winTextObject.SetActive(true);
         }
     }
@@ -183,6 +188,9 @@ public class PlayerController : MonoBehaviour
             if (col.gameObject.tag == "Enemy") {
                 isPlayerInv = true;
                 lifePoints--;
+                if (lifePoints == 0) {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
                 print("colision detected");
                 AudioSource.PlayClipAtPoint(EnemyHitclip, col.gameObject.transform.position);
                 SetLifePointText();
@@ -196,6 +204,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.name == "doorHitBox")
         {
+            objective++;
             fadeIn = true;
         }
 
