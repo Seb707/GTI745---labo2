@@ -827,15 +827,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.4081595, b: 1, a: 1}
+  m_Color: {r: 0.59607846, g: 0.20392159, b: 0.6313726, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 263dfe8c31e19674eb08826d8f6e0cc7, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1536,7 +1536,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '"feuille blanche " : A voir ! '
+  m_Text: '"feuille blanche " : restart game! '
 --- !u!1 &2766432474404347347
 GameObject:
   m_ObjectHideFlags: 0
@@ -3922,7 +3922,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '"OK sign" : A voir ! '
+  m_Text: '"OK sign" : confirm '
 --- !u!1 &5592872693223253625
 GameObject:
   m_ObjectHideFlags: 0

@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 707675522495001913, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_Text
+      value: '"feuille blanche " : Restart game  ! '
+      objectReference: {fileID: 0}
     - target: {fileID: 2895918559140420829, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
       propertyPath: m_MaxValue
       value: 0
@@ -174,6 +178,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7189956890624383918, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_Text
+      value: '"OK sign" : confirm '
+      objectReference: {fileID: 0}
     - target: {fileID: 8310296435827976187, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
       propertyPath: audioMixer
       value: 
@@ -199,7 +207,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1347630692}
+    - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1347630692}
     - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
@@ -207,15 +223,31 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMusicVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetSfxVolume
       objectReference: {fileID: 0}
     - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438104905703135222, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8634792303956526308, guid: 708fcdcf50c01d9418f94b6366512b43, type: 3}
