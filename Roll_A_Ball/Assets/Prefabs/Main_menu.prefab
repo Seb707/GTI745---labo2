@@ -4300,7 +4300,7 @@ GameObject:
   - component: {fileID: 5760886993790153268}
   - component: {fileID: 2476765859706859448}
   m_Layer: 5
-  m_Name: Boite_Grise
+  m_Name: Iphone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4353,7 +4353,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea302f12b36a24d4fa86fe5f1227a19d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b0d445f79efa1849ba5ded39af53c5d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5394,7 +5394,7 @@ GameObject:
   - component: {fileID: 5519600619883426918}
   - component: {fileID: 1180871792950533533}
   m_Layer: 5
-  m_Name: Boite_griseText
+  m_Name: IphoneText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5460,7 +5460,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '"Boite grise" :  A voir ! '
+  m_Text: '"Iphone" :  Ouvre le pause menu '
 --- !u!1 &7760581836711507384
 GameObject:
   m_ObjectHideFlags: 0
