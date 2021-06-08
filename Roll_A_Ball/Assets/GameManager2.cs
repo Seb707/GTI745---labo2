@@ -4,15 +4,16 @@ using UnityEngine;
 using NativeWebSocket;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager2 : MonoBehaviour
 {
     public GameObject ball;
-    public Rigidbody ballRB;
-    public string messageWB;
+    private string messageWB;
     public GameObject RestartTextObject;
     public GameObject RestartBgObject;
     public GameObject RestartImageObject;
+    public GameObject pauseMenuCanvas;
 
+    private Rigidbody ballRB;
     private bool awaitConfirm;
     private bool awaitRestartConfirm;
     private int awaitTimer = 0;
@@ -28,9 +29,10 @@ public class GameManager : MonoBehaviour
         RestartBgObject.SetActive(false);
         RestartImageObject.SetActive(false);
         ball = GameObject.Find("Player");
+        pauseMenuCanvas = GameObject.Find("Canvas_Pause");
         ballRB = ball.GetComponent<Rigidbody>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        
+
         websocket = new WebSocket("ws://localhost:8080");
 
         websocket.OnOpen += () =>
@@ -71,17 +73,19 @@ public class GameManager : MonoBehaviour
 #if !UNITY_WEBGL || UNITY_EDITOR
         websocket.DispatchMessageQueue();
 #endif
-
+        print("test");
         if (!string.IsNullOrEmpty(messageWB))
         {
             Debug.Log(messageWB);
 
-            if (updateCounterDelay >= 1) {
+            if (updateCounterDelay >= 1)
+            {
                 if (updateCounterDelay == 500)
                 {
                     updateCounterDelay = 0;
                 }
-                else {
+                else
+                {
                     updateCounterDelay++;
                 }
             }
@@ -92,20 +96,24 @@ public class GameManager : MonoBehaviour
                 switch (messageWB)
                 {
                     case "ok_hand":
-                        if (awaitRestartConfirm) {
+                        if (awaitRestartConfirm)
+                        {
                             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                             Time.timeScale = 1;
                         }
                         break;
                 }
-                if (awaitTimer == 2000) {
+                if (awaitTimer == 2000)
+                {
                     if (awaitRestartConfirm)
                     {
                         rsumeFromRestart();
                         awaitTimer = 0;
                     }
                 }
-            }else {
+            }
+            else
+            {
                 switch (messageWB)
                 {
                     case "right":
@@ -127,29 +135,31 @@ public class GameManager : MonoBehaviour
                         //ballRB.AddForce(Vector3.right * 3);
                         break;
                     case "peace_sign":
-                        if (updateCounterDelay == 0) {
+                        if (updateCounterDelay == 0)
+                        {
                             updateCounterDelay = 1;
                             disableEnemies();
                         }
                         break;
                     case "boite_grise":
-                        ballRB.AddForce(Vector3.right * 3);
                         break;
                     case "iphone":
-                        ballRB.AddForce(Vector3.right * 3);
+                        pauseMenuCanvas.GetComponent<PauseMenu>().testPause();
                         break;
                     case "feuille_blanche":
+                        pauseMenuCanvas.GetComponent<PauseMenu>().removePauseUI();
                         confirmRestart();
                         break;
                     default:
                         break;
                 }
             }
-            
+
         }
     }
 
-    private void confirmRestart() {
+    private void confirmRestart()
+    {
         Time.timeScale = 0;
 
         awaitConfirm = true;
@@ -160,7 +170,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void rsumeFromRestart() {
+    private void rsumeFromRestart()
+    {
 
         awaitConfirm = false;
         awaitRestartConfirm = false;
@@ -171,7 +182,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    private void disableEnemies() {
+    private void disableEnemies()
+    {
         if (!isDisabled)
         {
             foreach (GameObject enemy in enemies)
@@ -181,7 +193,8 @@ public class GameManager : MonoBehaviour
                 isDisabled = true;
             }
         }
-        else if (isDisabled) {
+        else if (isDisabled)
+        {
             foreach (GameObject enemy in enemies)
             {
                 print("enableing");

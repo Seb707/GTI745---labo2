@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -13,19 +14,33 @@ public class PauseMenu : MonoBehaviour
     public GameObject creditsMenuUi;
     public AudioMixer audioMixer;
     // Update is called once per frame
-    void Update()
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        GameIsPaused = false;
+    }
+
+        void Update()
+    {
+        if (!GameIsPaused)
         {
-            if (GameIsPaused)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Resume();
-            }
-            else
-            {
-                Pause();
+                    Pause();
             }
         }
+    }
+
+    public void testPause() {
+        if (!GameIsPaused)
+        { 
+            Pause();
+        }
+    }
+
+    public void removePauseUI() {
+        print("ez");
+        pauseMenuUi.SetActive(false);
+        GameIsPaused = false;
     }
 
     public void Resume()

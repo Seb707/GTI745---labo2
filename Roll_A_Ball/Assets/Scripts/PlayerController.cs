@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI LifePointsTextObject;
     public float fadeSpeed;
     public AudioClip EnemyHitclip;
+    public AudioClip secretDiscovered;
 
     private bool fadeIn, fadeOut;
     private int objective = 1;
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
-        totalPickUps = 9;
+        totalPickUps = 11;
         lifePoints = 6;
         invTimer = 0;
 
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour
                 ObjectiveTextObject.text = "La porte c'est ouverte!";
                 break;
             case 3:
-                ObjectiveTextObject.text = "Ball Speed: ";
+                ObjectiveTextObject.text = "Il reste 3 cube à trouver!";
                 break;
             default:
 
@@ -124,7 +125,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString() + "/" + totalPickUps.ToString();
-        if (count >= 9)
+        if (count >= 11)
         {
             Time.timeScale = 0;
             winTextObject.SetActive(true);
@@ -213,8 +214,9 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             count++;
 
-            if (count == 1){
+            if (count == 8){
                 print("fadeOut true");
+                AudioSource.PlayClipAtPoint(secretDiscovered, transform.position);
                 fadeOut = true;
             }
 
